@@ -1,10 +1,9 @@
 package com.example.demo.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class UserEntity {
@@ -14,6 +13,10 @@ public class UserEntity {
     private  String username;
     private String password;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    // cascade delete all todos when user will be deleted
+    // mappedBy -
+    private List<TodoEntity> todos;
     public UserEntity(){}
 
     public UserEntity get(){
@@ -42,5 +45,9 @@ public class UserEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<TodoEntity> getTodos() {
+        return todos;
     }
 }

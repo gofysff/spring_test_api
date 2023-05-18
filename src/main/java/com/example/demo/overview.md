@@ -3,6 +3,8 @@ Work with queries
 
 ## entity
 entities for databases
+shouldn't interact with client
+
 
 ## repository
 work with database
