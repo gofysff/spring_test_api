@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.entity.UserEntity;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class User {
         this.todos = todos;
     }
 
+    @NotNull
     public static User fromUserEntity(UserEntity userEntity){
         Long id = userEntity.getId();
         List<Todo> todos = userEntity.getTodos().stream().map(Todo::fromEntity).toList();

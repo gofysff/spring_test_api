@@ -7,11 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/todo")
 public class TodoController {
     @Autowired
-    private TodoService todoService;
+    private  TodoService todoService;
+
+    @GetMapping
+    public ResponseEntity<?> getTodo(@RequestParam Long todoId){
+        try{
+           TodoEntity todoEntity =  todoService.getTodo(todoId);
+           Todo todoModel = Todo.fromEntity(todoEntity);
+           return ResponseEntity.ok(todoModel);
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> createTodo(@RequestBody TodoEntity todo, @RequestParam Long userId){
         try {
@@ -34,8 +49,6 @@ public class TodoController {
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-
     }
 
 }

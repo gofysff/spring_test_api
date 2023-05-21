@@ -23,11 +23,12 @@ public class UserService {
     }
 
     public User getOneUser(Long id) throws UserNotFoundedException {
-        UserEntity user = userRepo.findById(id).get();
-        if (user == null){
+        try {
+            UserEntity user = userRepo.findById(id).get();
+            return User.fromUserEntity(user);
+        } catch (Exception e){
             throw new UserNotFoundedException("Пользователь не найден");
         }
-        return User.fromUserEntity(user);
     }
 
     public Long delete(Long id){
