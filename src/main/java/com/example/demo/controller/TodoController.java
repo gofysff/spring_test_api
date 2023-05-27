@@ -4,10 +4,10 @@ import com.example.demo.entity.TodoEntity;
 import com.example.demo.model.Todo;
 import com.example.demo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/todo")
@@ -32,7 +32,7 @@ public class TodoController {
         try {
             TodoEntity todoEntity = todoService.createTodo(todo, userId);
             Todo todoModel = Todo.fromEntity(todoEntity);
-            return ResponseEntity.ok(todoModel);
+            return new ResponseEntity<>(todoModel, HttpStatus.CREATED);
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

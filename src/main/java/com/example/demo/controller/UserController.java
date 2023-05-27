@@ -3,15 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.UserAlreadyExistException;
 import com.example.demo.exception.UserNotFoundedException;
-import com.example.demo.repository.UserRepo;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-public class userController {
+public class UserController {
 
     @Autowired
     private UserService userService;
@@ -21,7 +21,7 @@ public class userController {
     public ResponseEntity<Object> registration(@RequestBody UserEntity user){
         try {
             userService.registration(user);
-            return ResponseEntity.ok("Пользователь успешно сохранен");
+            return new ResponseEntity<>("Пользователь успешно сохранен", HttpStatus.CREATED);
         } catch (UserAlreadyExistException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
